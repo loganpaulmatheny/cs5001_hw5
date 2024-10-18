@@ -17,7 +17,7 @@ def remove_punctuation(line: str) -> str:
     """
     # Can be changed depending on what all punctuation you want removed
     # Simple regex and module for substituting
-    return re.sub(r'[!.]', '', line)
+    return re.sub(r"[!.]", "", line)
 
 
 def substitute(song: list, old_word: str, new_word: str) -> bool:
@@ -51,10 +51,10 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
 
 
 def reverse_it(song: list) -> list:
-    '''
+    """
     Function: Takes in a song (list) and reverses the stanzas within it
     Return: Song with stanzas reversed and punctuation removed
-    '''
+    """
     # Loop through the song and remove puctuation
     # Split line of song on space
     # Reverse the list
@@ -63,15 +63,37 @@ def reverse_it(song: list) -> list:
         song[i] = remove_punctuation(song[i])
         song[i] = song[i].split(" ")
         song[i].reverse()
-        song[i] = ' '.join(song[i])
+        song[i] = " ".join(song[i])
     return song
+
+
+def load_song(selection: int) -> list:
+    """
+    Function: Takes an int from a user representing a song they wish to play
+    Return: A list with song lyrics index 0 and the title index 1
+    """
+    # Define the max int value the user may enter
+    song_options = len(music.PLAYLIST)
+
+    # Determine if the argument passed is within the valid range
+    if selection < 0 or selection > song_options:
+        return []
+    else:
+        # Create the song-title list
+        song = []
+        song.append(music.SONGS[selection - 1])
+        song.append(music.PLAYLIST[selection - 1])
+        return song
 
 
 def main():
     # print(substitute(music.SONGS[0], "new", "fart"))
     # print(music.SONGS[0])
 
-    print(reverse_it(music.SONGS[0]))
+    # print(reverse_it(music.SONGS[0]))
+
+    print(load_song(1))
+    print(load_song(56))
 
 
 if __name__ == "__main__":
