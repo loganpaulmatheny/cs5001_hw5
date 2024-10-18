@@ -9,6 +9,16 @@ import music
 import re
 
 
+def remove_punctuation(line: str) -> str:
+    """
+    Function: Helper function to remove any punctuation from a line within
+        a song.
+    Return: A copy of the line within the song w/out punctuation.
+    """
+    return re.sub(r'[!.]', '', line)
+    # Should not be removing things like - only punctuation
+
+
 def substitute(song: list, old_word: str, new_word: str) -> bool:
     # Takes a song, word to look for, replace the word with new word
     # List of strings
@@ -30,20 +40,35 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
     for i in range(len(song)):
         if song[i].find(old_word) != -1:
             song[i] = song[i].replace(old_word, new_word)
-            song[i] = re.sub(r"[^\w\s]", "", song[i])
+            song[i] = remove_punctuation(song[i])
             found = True
         continue
 
     # If no old words are found, print an error
     if found is False:
-        print(f"Error: It seems the word {old_word} is 
-              not in " "the song, try again.")
+        print(f"Error: It seems the word {old_word} is not in " "the song, try again.")
     return found
+
+
+def reverse_it(song: list) -> list:
+    # I want to remove any punctuation in the string
+    # I want to split the string into a list on " "
+    # Then reverse it
+    # Then join it again
+
+    for i in range(len(song)):
+        song[i] = remove_punctuation(song[i])
+        song[i] = song[i].split(" ")
+        song[i].reverse()
+        song[i] = ' '.join(song[i])
+    return song
 
 
 def main():
     # print(substitute(music.SONGS[0], "new", "fart"))
     # print(music.SONGS[0])
+
+    print(reverse_it(music.SONGS[0]))
 
 
 if __name__ == "__main__":
