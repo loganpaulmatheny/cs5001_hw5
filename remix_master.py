@@ -15,8 +15,9 @@ def remove_punctuation(line: str) -> str:
         a song.
     Return: A copy of the line within the song w/out punctuation.
     """
+    # Can be changed depending on what all punctuation you want removed
+    # Simple regex and module for substituting
     return re.sub(r'[!.]', '', line)
-    # Should not be removing things like - only punctuation
 
 
 def substitute(song: list, old_word: str, new_word: str) -> bool:
@@ -29,7 +30,6 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
         is found. It then modifies the song to replace the old word with
         the new AND removes all the punctuation of within the song.
     Return: Boolean based on any of the 'old word' were found within the song
-
     """
     # Flag
     found = False
@@ -51,11 +51,14 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
 
 
 def reverse_it(song: list) -> list:
-    # I want to remove any punctuation in the string
-    # I want to split the string into a list on " "
-    # Then reverse it
-    # Then join it again
-
+    '''
+    Function: Takes in a song (list) and reverses the stanzas within it
+    Return: Song with stanzas reversed and punctuation removed
+    '''
+    # Loop through the song and remove puctuation
+    # Split line of song on space
+    # Reverse the list
+    # Then rejoin the reversed list to create the new string
     for i in range(len(song)):
         song[i] = remove_punctuation(song[i])
         song[i] = song[i].split(" ")
