@@ -86,15 +86,44 @@ def load_song(selection: int) -> list:
         return song
 
 
+def playback(current_song: list):
+    """
+    Function: Plays the required song (prints it to console)
+    Return: N/A
+    """
+    lyrics = current_song[0]
+
+    for i in range(len(lyrics)):
+        print(lyrics[i])
+
+
 def main():
     # print(substitute(music.SONGS[0], "new", "fart"))
     # print(music.SONGS[0])
 
     # print(reverse_it(music.SONGS[0]))
 
-    print(load_song(1))
-    print(load_song(56))
+    # print(load_song(1))
+    # print(load_song(56))
 
+    current_song = load_song(1)
+
+    print("Welcome to the ReMix-Master. You can remix the greatest hits")
+    print("Turn up the 808's and drop the beat! Here's your remix:")
+    playback(current_song)
+    print("")
+    selection = input(
+        """Remix-Master:
+        L: Load a different song
+        T: Title of current song
+        S: Substitute a word
+        P: Playback your song
+        R: Reverse it!
+        X: Reset to original song
+        Q: Quit?"""
+    )
+    
+    
 
 if __name__ == "__main__":
     main()
