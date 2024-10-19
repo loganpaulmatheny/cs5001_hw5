@@ -81,8 +81,9 @@ def load_song(selection: int) -> list:
     else:
         # Create the song-title list
         song = []
-        song.append(music.SONGS[selection - 1])
-        song.append(music.PLAYLIST[selection - 1])
+        # Make shallow copies of the song and its title
+        song.append(music.SONGS[selection - 1][:])
+        song.append(music.PLAYLIST[selection - 1][:])
         return song
 
 
@@ -113,12 +114,12 @@ def title(current_song: list):
     Return: String the title of the song
     """
     print(f"Your current song title is: {current_song[1]}")
-    print("")
 
 
 def select_input():
     return input(
-        """Remix-Master:
+        """
+            Remix-Master:
             L: Load a different song
             T: Title of current song
             S: Substitute a word
@@ -144,8 +145,8 @@ def main():
 
     print("Welcome to the ReMix-Master. You can remix the greatest hits")
     print("Turn up the 808's and drop the beat! Here's your remix:")
-    playback(current_song)
     print("")
+    playback(current_song)
     selection = select_input()
 
     while selection != "Q":
@@ -162,7 +163,10 @@ def main():
                 substitute(current_song[0], old_word, new_word)
             case "P":
                 playback(current_song)
-
+            case "R":
+                reverse_it(current_song[0])
+            case "X":
+                current_song = reset_song(current_song)
         selection = select_input()
 
 
