@@ -97,6 +97,24 @@ def playback(current_song: list):
         print(lyrics[i])
 
 
+def reset_song(current_song: list) -> list:
+    """
+    Function: Takes the current song list as an argument and changes the
+        remix back to the original.
+    Return: List of original song lyrics and title.
+    """
+    song_number = music.PLAYLIST.index(current_song[1]) + 1
+    return load_song(song_number)
+
+
+def title(current_song: list):
+    """
+    Function: Takes in the current song and prints its title
+    Return: String the title of the song
+    """
+    print(current_song[1])
+
+
 def main():
     # print(substitute(music.SONGS[0], "new", "fart"))
     # print(music.SONGS[0])
@@ -122,8 +140,11 @@ def main():
         X: Reset to original song
         Q: Quit?"""
     )
-    
-    
+
+    match selection:
+        case "L":
+            song_number = input("")
+
 
 if __name__ == "__main__":
     main()
