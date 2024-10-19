@@ -112,7 +112,23 @@ def title(current_song: list):
     Function: Takes in the current song and prints its title
     Return: String the title of the song
     """
-    print(current_song[1])
+    print(f"Your current song title is: {current_song[1]}")
+    print("")
+
+
+def select_input():
+    return input(
+        """Remix-Master:
+            L: Load a different song
+            T: Title of current song
+            S: Substitute a word
+            P: Playback your song
+            R: Reverse it!
+            X: Reset to original song
+            Q: Quit?
+
+            Your choice: """
+    ).upper()
 
 
 def main():
@@ -130,20 +146,24 @@ def main():
     print("Turn up the 808's and drop the beat! Here's your remix:")
     playback(current_song)
     print("")
-    selection = input(
-        """Remix-Master:
-        L: Load a different song
-        T: Title of current song
-        S: Substitute a word
-        P: Playback your song
-        R: Reverse it!
-        X: Reset to original song
-        Q: Quit?"""
-    )
+    selection = select_input()
 
-    match selection:
-        case "L":
-            song_number = input("")
+    while selection != "Q":
+        match selection:
+            case "L":
+                song_number = input("")
+            case "T":
+                title(current_song)
+            case "S":
+                old_word = input(
+                    "What word do you want to replace in the existing song? "
+                )
+                new_word = input("What new word do you want to use for the song? ")
+                substitute(current_song[0], old_word, new_word)
+            case "P":
+                playback(current_song)
+
+        selection = select_input()
 
 
 if __name__ == "__main__":
