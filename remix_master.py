@@ -14,6 +14,10 @@ def remove_punctuation(line: str) -> str:
     Function: Helper function to remove any punctuation from a line within
         a song.
     Return: A copy of the line within the song w/out punctuation.
+
+    Example:
+    >>> remove_punctuation("Hello world!")
+    'Hello world'
     """
     # Can be changed depending on what all punctuation you want removed
     # Simple regex and module for substituting
@@ -21,15 +25,16 @@ def remove_punctuation(line: str) -> str:
 
 
 def substitute(song: list, old_word: str, new_word: str) -> bool:
-    # Takes a song, word to look for, replace the word with new word
-    # List of strings
-    # Should iterate through the list and use .replace
     """
     Function: Takes a song, which has been broken up into a list of phrases,
         along with a word to 'look for' and word to replace it with if it
         is found. It then modifies the song to replace the old word with
         the new AND removes all the punctuation of within the song.
     Return: Boolean based on any of the 'old word' were found within the song
+
+    Example:
+    >>> substitute(["Hey y'all!", "Heyyyyyy y'all!"], "y'all", "you all")
+    True
     """
     # Flag
     found = False
@@ -46,7 +51,9 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
 
     # If no old words are found, print an error
     if found is False:
-        print(f"Error: It seems the word {old_word} is not in " "the song, try again.")
+        print(f"Error: It seems the word {old_word} is not in " 
+              "the song, try again."
+             )
     return found
 
 
@@ -54,6 +61,10 @@ def reverse_it(song: list) -> list:
     """
     Function: Takes in a song (list) and reverses the stanzas within it
     Return: Song with stanzas reversed and punctuation removed
+
+    Example:
+    >>> reverse_it(["Line one", "Line two"])
+    ['one Line', 'two Line']
     """
     # Loop through the song and remove puctuation
     # Split line of song on space
@@ -65,6 +76,25 @@ def reverse_it(song: list) -> list:
         song[i].reverse()
         song[i] = " ".join(song[i])
     return song
+
+
+def select_song():
+    """
+    Function: Helper function designed to pick a song number
+    Return: int representing the song you wish to play
+    """
+
+    return int(
+        input(
+            """
+                Choose the number for the song you want to load:
+                1. Old MacDonald
+                2. Row Your Boat
+                3. Happy
+
+                Your choice: """
+        )
+    )
 
 
 def load_song(selection: int) -> list:
@@ -91,9 +121,14 @@ def playback(current_song: list):
     """
     Function: Plays the required song (prints it to console)
     Return: N/A
+
+    Example:
+    >>> playback([["Tweedle dee"], "Me"])
+    Tweedle dee
     """
     lyrics = current_song[0]
 
+    # Simple iteration through song lines
     for i in range(len(lyrics)):
         print(lyrics[i])
 
@@ -104,6 +139,7 @@ def reset_song(current_song: list) -> list:
         remix back to the original.
     Return: List of original song lyrics and title.
     """
+
     song_number = music.PLAYLIST.index(current_song[1]) + 1
     return load_song(song_number)
 
@@ -112,11 +148,20 @@ def title(current_song: list):
     """
     Function: Takes in the current song and prints its title
     Return: String the title of the song
+
+    >>> title([["We do the mash"], "Monster Mash"])
+    Your current song title is: Monster Mash
     """
     print(f"Your current song title is: {current_song[1]}")
 
 
 def select_input():
+    """
+    Function: Let's the user select the action they wish to take
+        within the program and returns a corresponding upper case
+        letter.
+    Return: Uppercase letter to be used in case statement.
+    """
     return input(
         """
             Remix-Master:
@@ -133,13 +178,6 @@ def select_input():
 
 
 def main():
-    # print(substitute(music.SONGS[0], "new", "fart"))
-    # print(music.SONGS[0])
-
-    # print(reverse_it(music.SONGS[0]))
-
-    # print(load_song(1))
-    # print(load_song(56))
 
     current_song = load_song(1)
 
@@ -152,17 +190,7 @@ def main():
     while selection != "Q":
         match selection:
             case "L":
-                song_number = int(
-                    input(
-                        """
-                Choose the number for the song you want to load:
-                1. Old MacDonald
-                2. Row Your Boat
-                3. Happy
-
-                Your choice: """
-                    )
-                )
+                song_number = select_song()
                 current_song = load_song(song_number)
             case "T":
                 title(current_song)
@@ -170,7 +198,10 @@ def main():
                 old_word = input(
                     "What word do you want to replace in the existing song? "
                 )
-                new_word = input("What new word do you want to use for the song? ")
+                new_word = input(
+                                 "What new word do you want to"
+                                 " use for the song? "
+                                )
                 substitute(current_song[0], old_word, new_word)
             case "P":
                 playback(current_song)
@@ -185,3 +216,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+    import doctest
+
+    doctest.testmod(
+                    optionflags=doctest.NORMALIZE_WHITESPACE | 
+                    doctest.ELLIPSIS
+                   )
