@@ -152,15 +152,17 @@ def main():
     while selection != "Q":
         match selection:
             case "L":
-                song_number = int(input(
-                """
+                song_number = int(
+                    input(
+                        """
                 Choose the number for the song you want to load:
                 1. Old MacDonald
                 2. Row Your Boat
                 3. Happy
 
                 Your choice: """
-                ))
+                    )
+                )
                 current_song = load_song(song_number)
             case "T":
                 title(current_song)
@@ -177,6 +179,8 @@ def main():
             case "X":
                 current_song = reset_song(current_song)
         selection = select_input()
+
+    print("Bravo! Your Grammy Award is being shipped to you now!")
 
 
 if __name__ == "__main__":
