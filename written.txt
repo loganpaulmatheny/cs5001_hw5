@@ -1,0 +1,27 @@
+'''
+CS5001
+HW5 - Written Questions
+Fall 2024
+Logan Matheny
+'''
+
+## Written #1: 
+1a. cocopuffscocopuffs
+
+1b. cocopuffspuffs
+
+1c. False
+
+
+## Written #2: 
+print(s[::-3]
+
+
+## Written #3: 
+[b, o, s, t, o, n, _, r, e, d, _, s, o, x]
+
+3a. so, no error - starts at 11, ends at 13 (non-inclusive) 
+
+3b. sox, no error - starts at 11, ends at 14 (non-inclusive)
+
+3c. sox, no error - starts at 11, ends at 15 (non-inclusive)
