@@ -21,7 +21,7 @@ def remove_punctuation(line: str) -> str:
     """
     # Can be changed depending on what all punctuation you want removed
     # Simple regex and module for substituting
-    return re.sub(r"[!.]", "", line)
+    return re.sub(r"[!.,?_]", "", line)
 
 
 def substitute(song: list, old_word: str, new_word: str) -> bool:
@@ -40,20 +40,21 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
     found = False
 
     # Loop to check if old word is in song
-    # If any old word NOT not found (found)
-    # Both replace the new word and remove punctuation
+    # Replace the new word
     for i in range(len(song)):
         if song[i].find(old_word) != -1:
             song[i] = song[i].replace(old_word, new_word)
-            song[i] = remove_punctuation(song[i])
             found = True
         continue
 
+    # If an old word was found, replace all punctuation
+    if found is True:
+        for i in range(len(song)):
+            song[i] = remove_punctuation(song[i])
+
     # If no old words are found, print an error
-    if found is False:
-        print(f"Error: It seems the word {old_word} is not in " 
-              "the song, try again."
-             )
+    elif found is False:
+        print(f"Error: It seems the word {old_word} is not in " "the song, try again.")
     return found
 
 
@@ -198,10 +199,7 @@ def main():
                 old_word = input(
                     "What word do you want to replace in the existing song? "
                 )
-                new_word = input(
-                                 "What new word do you want to"
-                                 " use for the song? "
-                                )
+                new_word = input("What new word do you want to" " use for the song? ")
                 substitute(current_song[0], old_word, new_word)
             case "P":
                 playback(current_song)
@@ -218,7 +216,4 @@ if __name__ == "__main__":
     main()
     import doctest
 
-    doctest.testmod(
-                    optionflags=doctest.NORMALIZE_WHITESPACE | 
-                    doctest.ELLIPSIS
-                   )
+    doctest.testmod(optionflags=doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS)
