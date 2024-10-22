@@ -33,23 +33,28 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
     Return: Boolean based on any of the 'old word' were found within the song
 
     Example:
-    # >>> substitute(["Hey y'all!", "Heyyyyyy y'all!"], "y'all", "you all")
-    # True
+    >>> substitute(["Hey y'all!", "Heyyyyyy y'all!"], "y'all", "you all")
+    True
     """
-    # NOTE THERE IS SOME UNIT TEST THAT'S NOT PASTING BUT IN MY
-    # MULTI-WORD TESTING IT IS REPLACING THEM FINE E.G. I >
-    # MICKEY MOUSE
+    # NOTE - there was one unit test I was not passing
+    # I corresponded with Yiming who informed me that
+    # Only WORDS should be able to be replaced, not char
+
     # Flag and take out case sensitivity issues with user input
     found = False
-    # old_word = old_word.lower().replace(" ", "_")
+    old_word = old_word.lower()
     new_word = new_word.lower()
 
+    # TRICKY - you have to split the line, to check words not char
     # Loop to check if old word is in song
     # Replace the new word
     for i in range(len(song)):
-        if old_word in song[i]:
-            found = True
-            song[i] = song[i].replace(old_word, new_word)
+        words = song[i].split()
+        for j in range(len(words)):
+            if words[j] == old_word:
+                found = True
+                words[j] = new_word
+        song[i] = " ".join(words)
 
     # If an old word was found, replace all punctuation
     if found is True:
@@ -60,8 +65,8 @@ def substitute(song: list, old_word: str, new_word: str) -> bool:
 
     # If no old words are found, print an error
     elif found is False:
-        print(f"Error: It seems the word {old_word} is not in " 
-              "the song, try again.")
+        print(f"Error: It seems the word {old_word} is not in " "the song, try again.")
+
     return found
 
 
@@ -205,8 +210,7 @@ def main():
                 old_word = input(
                     "What word do you want to replace in the existing song? "
                 )
-                new_word = input("What new word do you want to"
-                                 " use for the song? ")
+                new_word = input("What new word do you want to" " use for the song? ")
                 substitute(current_song[0], old_word, new_word)
             case "P":
                 playback(current_song)
@@ -223,5 +227,4 @@ if __name__ == "__main__":
     main()
     import doctest
 
-    doctest.testmod(optionflags=doctest.NORMALIZE_WHITESPACE 
-                    | doctest.ELLIPSIS)
+    doctest.testmod(optionflags=doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS)
